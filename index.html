@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style-nomal.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <title>네이버쇼핑-쇼핑라이브</title>
+</head>
+
+<body>
+    <div id="index" class="index">
+        <div class="wrap">
+
+            <!--APP 알림 신청이 완료된 이후 노출 3초간 유지되고 사라짐-->
+            <div id="tost" class="tost-on">
+                <ul>
+                    <li><img class="coin" src="imgs/asset/icon-alram-on.svg"></li>
+                    <li>알림신청 완료!</li>
+                </ul>
+            </div>
+
+            <!--APP 알림 신청이 해제된 이후 노출 3초간 유지되고 사라짐-->
+            <div id="tost" class="tost-off">
+                <ul>
+                    <li><img class="coin" src="imgs/asset/icon-alram-off.svg"></li>
+                    <li>알림을 취소했습니다.</li>
+                </ul>
+            </div>
+
+            <!-- 네비게이션 -->
+            <nav>
+                <ul class="nav-btn index">
+                    <!-- 뒤로가기/ 탭 닫기 -->
+                    <!-- 모바일/태블릿 상황에서는 백키 아이콘 / PC에서는 네이버페이 로고 노출됨 -->
+                    <li id="close-window" class="back-btn" onclick="closeBtn();">
+                        <img class="mo" src="imgs/asset/left-arrow.svg">
+                        <img class="pc" src="imgs/asset/IcNewNpayLogo.svg">
+                    </li>
+                    <!-- 알림 버튼 -->
+                    <!-- 눌렀을때 알림의 상태에 따라 알림 확인 및 취소 팝업 노출 -->
+                    <!-- app / alram / true 일경우 id="alram-on" imgs/asset/alram-on.svg -->
+                    <!-- app / alram / false 일경우 id="alram-off" imgs/asset/alram-off.svg -->
+                    <li class="alram" id="alram-off">
+                        <img src="imgs/asset/alram-off.svg">
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="contant">
+                <div class="itembox index">
+                    <!-- 상단 배너 -->
+                    <ul class="head-banner">
+                        <li class="txt">
+                            <p>쇼핑라이브 5초 보고</p>
+                            <p>5원 받기</p>
+                        </li>
+                        <li class="img">
+                            <img src="imgs/mission_icon.svg">
+                        </li>
+                    </ul>
+
+                    <!-- 라이브 쇼핑 리스트(라이브 되고 있는 쇼핑 리스트 4개 까지 보여짐) -->
+                    <ul class="live-list">
+
+                        <!-- 라이브 쇼핑 리스트  -->
+                        <li class="list-item">
+                            <!-- 라이브 쇼핑 리스트 썸네일 이미지 출력  -->
+                            <!-- 아래 백그라운드로 이미지 제어 url(#) 출력할 이미지 주소 호출  -->
+                            <ul class="live-list-thumb" style="background-image: url(imgs/live-tumb/item1.png);">
+                                 <!-- 라이브 리스트의 리워드 지급 유무 뱃지 노출  -->
+                                <li class="live-list-badge">
+                                    <!-- 리워드 받기 전 상태 imgs/badge/badge_before.svg -->
+                                    <!-- 리워드 받은 후 상태 imgs/badge/badge_after.svg -->
+                                    <img src="imgs/badge/badge_before.svg">
+                                    <!-- 리워드 지급 금액 노출 -->
+                                    <p>5원</p>
+                                </li>
+                                <!-- 프로그레스 바 영역 케이스는 총 3단계 -->
+                                <li class="live-list-bar">
+                                    <!-- 방송타임에 따라 형태를 3가지로 분류함 (유동적으로 변하지 않음/ 페이지 로딩 시점 기준) -->
+                                    <!-- case1 = 방송 시작 ~ 14분 59 초
+                                        <p>방금 시작했어요!</p>
+                                        <div class="bar case1"></div>
+                                    -->
+                                    <!-- case2 = 15분 ~ 44분 59 초
+                                        <p>라이브 중이에요!</p>
+                                        <div class="bar case2"></div>
+                                    -->
+                                    <!-- case3 = 45분 ~ 방송 종료까지
+                                        <p>곧 끝나요!</p>
+                                        <div class="bar case3"></div>
+                                    -->
+                                    <p>방금 시작했어요!</p>
+                                    <div class="bar case1"></div>
+                                </li>
+                            </ul>
+                            <!-- 라이브 방송 타이틀 -->
+                            <p class="live-list-title">
+                                일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                            </p>
+                        </li>
+                        <!-- 라이브 쇼핑 리스트  -->
+
+                        <li class="list-item">
+                            <ul class="live-list-thumb" style="background-image: url(imgs/live-tumb/item2.png);">
+                                <li class="live-list-badge">
+                                    <img src="imgs/badge/badge_before.svg">
+                                    <p>5원</p>
+                                </li>
+                                <li class="live-list-bar">
+                                    <p>라이브 중이에요!</p>
+                                    <div class="bar case2"></div>
+                                </li>
+                            </ul>
+                            <p class="live-list-title">
+                                한줄일 경우
+                            </p>
+                        </li>
+
+                        <li class="list-item">
+                            <ul class="live-list-thumb" style="background-image: url(imgs/live-tumb/item3.png);">
+                                <li class="live-list-badge">
+                                    <img src="imgs/badge/badge_after.svg">
+                                    <p></p>
+                                </li>
+                                <li class="live-list-bar">
+                                    <p>곧 끝나요!</p>
+                                    <div class="bar case3"></div>
+                                </li>
+                            </ul>
+                            <p class="live-list-title">
+                                듀얼브러쉬로 더 깨끗하게다이슨 청소기 헤드
+                            </p>
+                        </li>
+
+                        <li class="list-item">
+                            <ul class="live-list-thumb" style="background-image: url(imgs/live-tumb/item4.png);">
+                                <li class="live-list-badge">
+                                    <img src="imgs/badge/badge_after.svg">
+                                    <p></p>
+                                </li>
+                                <li class="live-list-bar">
+                                    <p>곧 끝나요!</p>
+                                    <div class="bar case3"></div>
+                                </li>
+                            </ul>
+                            <p class="live-list-title">
+                                일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                            </p>
+                        </li>
+
+                    </ul>
+
+                    <!--적립 가능 방송이 없을 경우(노출할 수 있는 광고가 없는경우)-->
+                    <ul class="live-list">
+                        <li class="list-item-none">
+                            <div class="icon">
+                                <img src="imgs/asset/noti/icon/noti2.svg">
+                            </div>
+                            <div class="txt">
+                                <p class="tit">현재 시청 가능한 미션이 없어요.</p>
+                                <p class="sub">미션이 준비되면 알려드릴게요.</p>
+                            </div>
+                            <div class="btn alram" id="alram-off">
+                                <button>
+                                    <!--알림이 off 일떄 // 헤더의 알림 상태와 동일하여야함 -->
+                                    <!--imgs/asset/alram-off.svg-->
+                                    <!--알림이 on 일떄 /// 헤더의 알림 상태와 동일하여야함 -->
+                                    <!--imgs/asset/alram-on.svg-->
+                                    <img src="imgs/asset/alram-off.svg">
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="itembox">
+                    <!-- 라이브 예정방송 리스트 (최초 4개 로딩 이후 하단 more 버튼을 통하여 6개씩 로딩) -->
+                    <ul class="comming-list">
+                        <li class="list-title">
+                            <p>Coming Soon</p>
+                            <p>포인트 적립 놓치지 않게 알림설정하기!</p>
+                        </li>
+                        <li class="list-item">
+                            <!-- 라이브 예정 방송 리스트 아이템 -->
+                            <ul class="comming-list-item">
+                                <!-- 라이브 예정 방송 리스트 썸네일 // standByImageUrl -->
+                                <!-- 아래 백그라운드로 이미지 제어 url(#) 출력할 이미지 주소 호출  -->
+                                <!-- 아래 백그라운드로 이미지 이미지 없을경우 style="background-image: url(#);" 제거(디폴트 이미지 출력됨) -->
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item1.png);"></li>
+                                <li class="comming-list-title">
+                                    <!-- 방송 예정 시간 -->
+                                    <!-- 라이브 예정 방송 리스트 아이템 -->
+                                    <!-- expectedStartDate 기준 -->
+                                    <!-- 
+                                    기본 = 0월 0일 방송 예정 
+                                    당일 = 오늘 오전(오후) 0시 00분 방송 예정
+                                    익일 = 내일 오전(오후) 0시 00분 방송 예정
+                                    -->
+                                    <p class="time">
+                                        오늘 오후 7시 방송 예정
+                                    </p>
+                                    <!-- item.title  /  방송 타이틀 호출  -->
+                                    <p class="tit">
+                                        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                                    </p>
+                                </li>
+                            </ul>
+                            <!-- 라이브 예정 방송 리스트 아이템 -->
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item2.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="time">
+                                        내일 오전 11시 방송 예정
+                                    </p>
+                                    <p class="tit">
+                                        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item3.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="time">
+                                        3월 15일 방송 예정
+                                    </p>
+                                    <p class="tit">
+                                        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb"></li>
+                                <li class="comming-list-title">
+                                    <p class="time">
+                                        오늘 오후 7시 방송 예정
+                                    </p>
+                                    <p class="tit">
+                                        라이브 예정 썸네일 없을 경우
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <div class="more-btn">
+                                <!-- 더보기 버튼 영역 -->
+                                <!-- 버튼 클릭시 6개의 방송예정 리스트를 호출함 -->
+                                <!-- 불러올 리스트가 없는 경우 아래 버튼에 dispaly:none 처리 -->
+                                <!-- 불러올 리스트가 없는 경우 아래와 같이
+                                <button style="display:none;">
+                                    <p>라이브 더보기</p>
+                                    <img src="imgs/asset/under-arrow.svg">
+                                </button>
+                                -->
+                                <button>
+                                    <p>라이브 더 보기</p>
+                                    <img src="imgs/asset/under-arrow.svg">
+                                </button>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                    <!-- 해당 영역에 노출할 라이브 예정방송이 없을떄 
+                   <ul class="comming-list">
+                        <li class="list-title">
+                            <p>Comming Soon</p>
+                            <p>포인트 적립 놓치지 않게 알림설정하기!</p>
+                        </li>
+                    </ul>
+                    <ul class="live-list">
+                        <li class="list-item-none">
+                            <div class="icon">
+                                <img src="imgs/asset/noti/icon/noti2.svg">
+                            </div>
+                            <div class="txt">
+                                <p class="tit">현재 시청 가능한 미션이 없어요.</p>
+                                <p class="sub">미션이 준비되면 알려드릴게요.</p>
+                            </div>
+                            <div class="btn alram" id="alram-off">
+                                <button>
+                                    <img src="imgs/asset/alram-off.svg">
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    // 해당 화면이 노출되고 영역을 dlsplay:none 처리되어야 하는것도 고려되어야함(적용은 아니고 고려만 해주십셔) -->
+
+                </div>
+
+                <div class="blank">
+                </div>
+
+                <div class="itembox">
+                    <!-- 지난 라이브(상품) 다시보기 -->
+                    <ul class="comming-list type2">
+                        <li class="list-title">
+                            <p>지난 라이브 다시보기</p>
+                            <p>아쉽지만 라이브 종료된 방송은 리워드를 받을 수 없어요.</p>
+                        </li>
+
+                        <!-- 상품 다시보기의 카테고리 리스트 
+                         순서 / 전체 > 뷰티 > 푸드 > 패션 > 라이프 > 여행/체험 > 키즈 > 테크 > 취미레저 > 문화생활 순으로 정렬 
+                        -->
+                        <!-- 터치시 .active 클래스 적용 -->
+                        <!-- 영역 초화시 좌우로 슬라이드 되며 가로 영역은 디바이스 화면전체로 잡음 -->
+                        <!-- 터치시에 해당 카테고리 아이템이 화면 정중앙으로 이동처리(이동 가능한 한도 내에서) -->
+                        <ul class="cate">
+                            <li class="cate-item active">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-all.svg" alt="전체">
+                                </div>
+                                <p>전체</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-beauty.svg" alt="뷰티">
+                                </div>
+                                <p>뷰티</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-food.svg" alt="푸드">
+                                </div>
+                                <p>푸드</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-fashion.svg" alt="패션">
+                                </div>
+                                <p>패션</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-life.svg" alt="라이프">
+                                </div>
+                                <p>라이프</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-travel.svg" alt="여행/체험">
+                                </div>
+                                <p>여행/체험</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-kids.svg" alt="키즈">
+                                </div>
+                                <p>키즈</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-tech.svg" alt="테크">
+                                </div>
+                                <p>테크</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-leisure.svg" alt="취미레저">
+                                </div>
+                                <p>취미레저</p>
+                            </li>
+
+                            <li class="cate-item">
+                                <div class="icon">
+                                    <img src="imgs/cate/cate-culture.svg" alt="문화생활">
+                                </div>
+                                <p>문화생활</p>
+                            </li>
+                        </ul>
+
+                        <!-- 지난 방송 리스트 아래로 스크롤 할 수록 무한 로딩됨 -->
+                        <li class="list-item">
+                            <!-- 지난 방송 리스트 아이템 -->
+                            <ul class="comming-list-item">
+                                <!-- 라이브 예정 방송 리스트 썸네일 // standByImageUrl -->
+                                <!-- 아래 백그라운드로 이미지 제어 url(#) 출력할 이미지 주소 호출  -->
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item4.png);"></li>
+                                <li class="comming-list-title">
+                                    <!-- item.title  /  방송 타이틀 호출  -->
+                                    <p class="tit">
+                                        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+                                    </p>
+                                </li>
+                            </ul>
+                            <!-- 지난 방송 리스트 아이템 -->
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item4.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="tit">
+                                        리빙러빙데이🌷소파/침대/식탁 가구 BEST
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item5.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="tit">
+                                        리빙러빙데이 이사&혼수 특가 라이브❤️
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item5.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="tit">
+                                       리빙러빙데이 이사&혼수 특가 라이브❤️
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item6.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="tit">
+                                       케라스타즈✨15% 쿠폰+본품증정 라운지데이 라이브🔥
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul class="comming-list-item">
+                                <li class="comming-list-thumb" style="background-image: url(imgs/item-list/item6.png);"></li>
+                                <li class="comming-list-title">
+                                    <p class="tit">
+                                       케라스타즈✨15% 쿠폰+본품증정 라운지데이 라이브🔥
+                                    </p>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- 푸터영역 // 바뀔 여지가 있음 -->
+            <div class="footer">
+                    <p class="header">쇼핑라이브 시청하고 포인트 받기 유의사항</p>
+                    <ul>
+                        <li>‘쇼핑라이브 시청하고 포인트 받기’ 는 네이버페이와 광고제휴된 네이버 쇼핑라이브 방송을 실시간으로 시청하고 포인트를 받을 수 있는 서비스 입니다.</li>
+                        <li >네이버페이는 송출되는 네이버 쇼핑라이브 방송과 관련된 운영, 상품 판매에는 관련이 없습니다. 라이브를 통해 구매한 상품 관련 문의가 있을 경우에는 해당 상품의 판매처에 문의 부탁드립니다.</li>
+                        <li> '쇼핑라이브 시청하고 포인트 받기'는 네이버페이 이벤트 페이지를 통해 쇼핑라이브에 방문한 경우에만 적립 가능하며, 다른 경로를 통해 쇼핑라이브에 접속한 경우는 포인트 적립이 불가합니다.</li>
+                        <li>진행 중 (On-air) 중인 쇼핑라이브를 5초 이상 시청해야 포인트가 적립됩니다.</li>
+                        <li>종료된 쇼핑라이브나 진행 예정인 쇼핑라이브에 대해서는 포인트가 적립되지 않습니다.</li>
+                        <li>쇼핑라이브 방송 당 포인트 리워드는 1회만 지급되며, 중복 참여는 불가합니다.</li>
+                        <li>쇼핑라이브 방송 화면에서 5초 이상 머물러야 합니다.</li>
+                        <li>라이브 진핸 현황은 페이지 접속 시점을 기준으로 표시되며, 이후 방송 종료 등 상태 변경이 실시간으로 반영되지 않을 수 있습니다.</li>
+                        <li>일부 네트워크 환경에서는 시청 시간이 정상적으로 기록되지 않을 수 있습니다.</li>
+                        <li>해당 서비스는 운영 정책에 따라 예고 없이 변경될 수 있습니다.</li>
+                        <li>포인트 지급 관련 문의사항이 있을 경우에는 하단 ‘문의하기’ 통해 접수 부탁드립니다.</li>
+                        <li>‘쇼핑라이브 시청하고 포인트 받기’ 광고에 대한 제휴 문의는 하단 ‘이용문의’ 통해 접수 부탁드립니다.</li>
+                        <li>쇼핑라이브 시청 후 지급되는 포인트는 서비스 정책에 따라 변경될 수 있습니다.</li>
+                        <li>해당 서비스는 운영 정책에 따라 예고 없이 변경될 수 있습니다.</li>
+                    </ul>
+                </div>
+
+                <!-- 일반 푸터 -->
+                <div class="footer-sign">
+                    <div class="sign">
+                        <p>PINCRUX</p>
+                        <p>Copyright PINCRUX. All rights reserved.</p>
+                    </div>
+                    <div class="btn">
+                        <!--cs 호출 버튼-->
+                        <p onclick="window.open('#');">이용문의</p>
+                    </div>
+                </div>
+
+        </div>
+
+        <!-- 알림 팝업 -->
+        <!-- 알림 받기 버튼 눌렀을떄 팝업 호출 -->
+        <div class="popup alarm-agree">
+            <div class="pop-dim"></div>
+            <div class="pop-nomal">
+                <div class="tit">
+                    <p class="head">
+                        새로운 라이브가 생기면<br> 알려드릴게요!
+                    </p>
+                </div>
+                <div class="adtxt">
+                    <p class="sub">라이브 보고 포인트 받기는 이 페이지에서만<br> 가능해요. 포인트 받을 수 있는 라이브가 <br>시작할 때 알림이 발송됩니다.</p>
+                </div>
+                <!-- 알림신청서 페이지로 이동 -->
+                <div class="sub-btn" id="application" >
+                    <p>알림 신청서 보기</p>
+                </div>
+                <div class="button">
+                    <!-- 팝업 닫기 -->
+                    <button class="close-btn">닫기</button>
+                    <!-- 알림 받기 동작 호출(앱과 연동이 필요함) -->
+                    <button class="close-btn" id="agree">알림 받기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 알람 취소 팝업 -->
+        <!-- 알림 받기 취소 눌렀을떄 팝업 호출 -->
+        <div class="popup alarm-disagree">
+            <div class="pop-dim"></div>
+            <div class="pop-nomal">
+                <div class="tit">
+                    <p class="head">
+                        라이브 시청하고 포인트 받기 <br>알림을 끄시겠어요?
+                    </p>
+                </div>
+                <div class="adtxt">
+                    <p class="sub">알림을 끄면 포인트를 받을 수 있는<br>
+                    기회를 놓칠 수 있어요.</p>
+                </div>
+                <!-- 알림신청서 페이지로 이동 -->
+                <div class="sub-btn" id="application">
+                    <p>알림 신청서 보기</p>
+                </div>
+                <div class="button">
+                    <!-- 팝업 닫기 -->
+                    <button class="close-btn">닫기</button>
+                    <!-- 알림 받기 취소 동작 호출(앱과 연동이 필요함) -->
+                    <button class="close-btn" id="disagree">알림 끄기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오류 팝업 -->
+        <div class="popup error">
+            <div class="pop-dim"></div>
+            <div class="pop-nomal">
+                <div class="tit">
+                    <p class="head">
+                        오류 제목
+                    </p>
+                </div>
+                <div class="adtxt">
+                    <p class="sub">오류 문구 입력</p>
+                </div>
+                <div class="button">
+                    <button class="close-btn">확인</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+
+        //알림 토스트 및 관련 버튼 변경 관련 스크립트
+        //조건 받는게 조금 까다로워서 알림 취소 동작이 안됨
+        //구동하는 플로우의 이해를 돕기위한 스크립트이니 제거하고 다시 만들어주시면 될것같습니다.
+        //중간중간 app과 통신도 해야되니.. 제거하고 다시 그리시는게 편할것 같습니다.
+        $(function() {
+            // === 공용: 토스트 노출 ===
+            function showToast($toast) {
+                if (!$toast.length) return; // 엘리먼트 없으면 종료
+                const prev = $toast.data("timer");
+                if (prev) clearTimeout(prev);
+
+                $toast.addClass("active");
+                const t = setTimeout(function() {
+                    $toast.removeClass("active");
+                    $toast.removeData("timer");
+                }, 3000);
+                $toast.data("timer", t);
+            }
+
+            // === 알람 아이콘 클릭: 상태 분기 ===
+            $(".alram").off("click.alram").on("click.alram", function() {
+                if ($(this).attr("id") === "alram-off") {
+                    $(".popup.alarm-agree").fadeIn(200);
+                } else {
+                    $(".popup.alarm-disagree").fadeIn(200);
+                }
+            });
+
+            // === 동의 팝업 ===
+            // 닫기/딤: agree 버튼(#agree)은 제외
+            $(".popup.alarm-agree").off("click.dimClose").on("click.dimClose", ".pop-dim, .close-btn", function(e) {
+                if ($(e.target).closest("#agree").length === 0) {
+                    $(".popup.alarm-agree").fadeOut(200);
+                }
+            });
+
+            // [알림 받기] → 토스트 ON + 아이콘 ON
+            $(document).off("click.agree").on("click.agree", "#agree", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $(".popup.alarm-agree").fadeOut(200);
+
+                // 토스트(ON) – .tost-on 요소가 있다면 그것을 사용
+                const $toastOn = $(".tost-on").length ? $(".tost-on") : $("#tost.tost-on");
+                showToast($toastOn);
+
+                // 아이콘 ON 전환
+                const $alramLi = $(".alram");
+                $alramLi.attr("id", "alram-on");
+                $alramLi.find("img").attr("src", "imgs/asset/alram-on.svg");
+            });
+
+            // === 해지 팝업 ===
+            // 닫기/딤: 확인 버튼(#disagree-confirm)은 제외
+            $(".popup.alarm-disagree").off("click.dimClose2").on("click.dimClose2", ".pop-dim, .close-btn", function(e) {
+                if ($(e.target).closest("#disagree-confirm").length === 0) {
+                    $(".popup.alarm-disagree").fadeOut(200);
+                }
+            });
+
+            // [확인] → 토스트 OFF + 아이콘 OFF로 복귀
+            $(document).off("click.disagree").on("click.disagree", "#disagree-confirm", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $(".popup.alarm-disagree").fadeOut(200);
+
+                // 토스트(OFF) – .tost-off 요소가 있다면 그것을 사용
+                const $toastOff = $(".tost-off").length ? $(".tost-off") : $("#tost.tost-off");
+                showToast($toastOff);
+
+                // 아이콘 OFF로 복귀
+                const $alramLi = $(".alram");
+                $alramLi.attr("id", "alram-off");
+                $alramLi.find("img").attr("src", "imgs/asset/alram-off.svg");
+            });
+        });
+        //알림 토스트 및 관련 버튼 변경 관련 스크립트
+
+        //카테고리 구동 스크립트
+        //스크롤 보정 및 클래스 변경
+        //요거는 그냥 쓰셔도 될것 같습니다.
+        $(function () {
+            const $wrap = $(".cate"); // 가로로 스크롤되는 컨테이너
+
+            // 동적 아이템에도 대응하도록 위임 이벤트
+            $wrap.on("click", ".cate-item", function () {
+                const $item = $(this);
+                const wrapEl = $wrap.get(0);
+                const wrapW = $wrap.innerWidth();         // 컨테이너 가로폭
+                const itemW = $item.outerWidth(true);     // 마진 포함 아이템 폭
+                const cur = $wrap.scrollLeft();           // 현재 스크롤 위치
+                const itemLeft = $item.position().left;   // 컨테이너 기준 아이템의 left
+
+                // 아이템 중심을 컨테이너 중심과 일치시키는 목표 스크롤 값
+                let target = Math.round(itemLeft + cur + (itemW / 2) - (wrapW / 2));
+
+                // 스크롤 한계 보정
+                const max = wrapEl.scrollWidth - wrapEl.clientWidth;
+                if (target < 0) target = 0;
+                if (target > max) target = max;
+
+                // 부드럽게 스크롤
+                $wrap.stop(true).animate({ scrollLeft: target }, 300, "swing");
+
+                // (선택) 활성 상태 표시
+                $wrap.find(".cate-item.active").removeClass("active");
+                $item.addClass("active");
+            });
+            });
+
+        // 닫기 버튼
+        function closeBtn() {
+            window.close();
+        }
+
+        // 알림신청서 열기
+        $(document).ready(function(){
+            $('#application').click(function() {
+                var url = "application.html"; // 열고 싶은 URL
+                window.open(url, '_blank'); // 새 창으로 열기
+            });
+        });
+   
+    </script>
+
+</body>
+</html>

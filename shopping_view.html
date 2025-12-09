@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Live View</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    .iframe {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      border: 0;
+    }
+
+    /* 토스트 알림 */
+    .toast {
+      position: fixed;
+      top: -50px; /* 처음엔 화면 위로 숨김 */
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #00DE5A;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: top 0.5s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      top: 70px; /* 내려옴 */
+    }
+    .toast.gray {
+      background: rgba(187, 187, 187, 0.8); /* 회색 */
+    }
+  </style>
+</head>
+<body>
+  <div id="toast" class="toast">적립 준비중...</div>
+  <div id="iframe-container"></div>
+
+  <script>
+    // URL 파라미터 읽기
+    const params = new URLSearchParams(window.location.search);
+    const externalServiceId = params.get("externalServiceId") || "npay";
+    //const type = params.get("type") || "replays";
+    const type = params.get("type") || "lives";
+    //const broadcastId = params.get("broadcastId") || "1662528";
+    const broadcastId = params.get("broadcastId") || "1765611";
+
+    //const src = `https://view.shoppinglive.naver.com/externals/${externalServiceId}/${type}/${broadcastId}?tr=lisol&fm=livesolution&sn=yourservice`;
+    const src = `https://view.shoppinglive.naver.com/externals/${externalServiceId}/${type}/${broadcastId}?tr=lim&fm=shoppinglive&sn=home`;
+    
+    document.getElementById("iframe-container").innerHTML = `
+      <iframe class="iframe" src="${src}"></iframe>
+    `;
+
+    // 토스트 동작
+    const toast = document.getElementById("toast");
+
+    function showToast() {
+      toast.classList.add("show");
+
+      // 10초 카운트다운
+      let count = 3;
+      setTimeout(() => {
+        const timer = setInterval(() => {
+          toast.textContent = `${count}초 후 적립`;
+          count--;
+
+          if (count < 0) {
+            clearInterval(timer);
+
+            // 5원 적립 완료 문구 (회색 배경)
+            toast.textContent = "5원 적립 완료!";
+            toast.classList.add("gray");
+
+            // 1초 후에 사라짐
+            setTimeout(() => {
+              toast.classList.remove("show");
+            }, 1000);
+          }
+        }, 1000);
+      }, 500); // 0.5초 후 시작
+    }
+
+    // 페이지 진입 시 토스트 실행
+    window.addEventListener("load", showToast);
+  </script>
+</body>
+</html>

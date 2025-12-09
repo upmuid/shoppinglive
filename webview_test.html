@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 - 수정본</title>
+    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (순수 Blank 로드)</title>
     <style>
         /* 페이지 전체를 채우도록 설정 */
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
@@ -33,29 +33,20 @@
                 return;
             }
 
-            // --- Layer 2: 동적 URL 난독화 및 로드 실행 (필터링 우회 시도) ---
-            // URL을 여러 조각으로 분리하여 정적 분석을 방해합니다. [1, 2]
-            const P1 = 'https://view.shoppinglive.naver.com/externals/npay/lives/';
-            const P2 = '1765611';
-            const P3 = '?tr=lim&fm=shoppinglive&sn=home';
-            
-            // 런타임에 URL 재조립
-            const full_url = P1 + P2 + P3; 
+            // 난독화 없이 전체 URL 사용
+            const full_url = `https://view.shoppinglive.naver.com/externals/npay/lives/1765611?tr=lim&fm=shoppinglive&sn=home`;
 
-            // about:blank 상태의 iFrame 내부 탐색을 동적으로 트리거 [3]
+            // JavaScript를 사용하여 iFrame의 src를 동적으로 설정하여 로드를 트리거합니다.
             if (iframe.contentWindow && iframe.contentWindow.location) {
-                // location.replace()를 사용하여 내부 컨텍스트를 로드합니다.
+                // about:blank 상태에서는 contentWindow 접근이 가능합니다.
+                // location.replace()를 사용하여 내부 컨텍스트를 최종 URL로 이동시킵니다.
                 iframe.contentWindow.location.replace(full_url);
-                console.log("iFrame dynamic load triggered: " + full_url);
+                console.log("iFrame dynamic load triggered using location.replace: " + full_url);
             } else {
-                // contentWindow 접근 실패 시 대체 방법
+                // 대체 방법: contentWindow 접근이 실패하는 경우 (대부분의 모던 브라우저에서 잘 작동하지 않음)
                 iframe.src = full_url;
                 console.warn("Using fallback iFrame SRC assignment.");
             }
-
-            // 참고: Layer 3 방어적 조치 (window.parent = null)는 크로스-오리진 보안 정책 상 
-            // window.parent 객체에 대한 접근이 허용되지 않을 수 있으므로, 
-            // 콘솔 오류를 방지하기 위해 로딩 테스트 단계에서는 생략했습니다.
         });
     </script>
 

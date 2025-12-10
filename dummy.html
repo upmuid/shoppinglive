@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (더미 페이지 로드)</title>
+    <title>더미 로딩 페이지</title>
     <style>
         /* 페이지 전체를 채우도록 설정 */
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        #live_frame { 
-            width: 100%; 
+        body, html { 
+            margin: 0; 
+            padding: 0; 
             height: 100%; 
-            border: none; 
+            width: 100%;
+            display: flex; /* 내부 요소 중앙 정렬용 */
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0; /* 배경색 지정 */
+        }
+        .loading-text {
+            font-size: 16px;
+            color: #555;
+            font-family: sans-serif;
         }
     </style>
 </head>
+<body>
+
+    <div class="loading-text">
+        콘텐츠를 로딩 중입니다... 잠시만 기다려 주세요.
+    </div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (더미 페이지 로드)</title>
+    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (2초 지연 로드)</title>
     <style>
         /* 페이지 전체를 채우도록 설정 */
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
@@ -34,33 +34,39 @@
             }
 
             // --- 환경 설정 ---
-            // Step 3. 최종 쇼핑라이브 URL
+            // 최종 쇼핑라이브 URL
             const final_live_url = `https://view.shoppinglive.naver.com/externals/npay/lives/1805050?tr=lim&fm=shoppinglive&sn=home`;
             
-            // Step 1. 네이버 감지 타이밍 우회용 더미 URL (요청하신 주소 적용)
+            // 더미 URL (요청하신 주소 적용)
             const dummy_url = `https://upmuid.github.io/shoppinglive/dummy.html`; 
             // ------------------
 
             let isDummyLoaded = false;
 
-            // Step 4. iFrame 로드 완료 후 최종 URL로 변경하는 함수
-            const loadFinalLiveUrl = () => {
-                console.log("Step 4. Dummy 페이지 로드 완료. 최종 라이브 URL 로드 시작.");
+            // Step 4. 최종 라이브 URL로 변경하는 함수
+            const setLiveUrl = () => {
                 iframe.src = final_live_url;
                 // 'onload' 핸들러가 최종 라이브 로드에도 다시 실행되는 것을 방지하기 위해 이벤트 리스너 제거
                 iframe.onload = null; 
+                console.log("Step 5. 최종 라이브 URL 로드 시작.");
             };
             
             // Step 2. iFrame에 'onload' 이벤트 리스너를 추가하여 더미 페이지 로드 완료를 감지
             iframe.onload = function() {
                 if (!isDummyLoaded) {
                     isDummyLoaded = true;
-                    // 로드 완료 감지 후 최종 URL 로드 함수 호출
-                    loadFinalLiveUrl();
+                    console.log("Step 2. Dummy 페이지 로드 완료.");
+                    console.log("Step 3. 2초(2000ms) 대기 시작...");
+                    
+                    // Step 3. 2초(2000ms) 지연 후 최종 URL 로드
+                    setTimeout(() => {
+                        // Step 4. 2초 후 최종 URL 로드 함수 호출
+                        setLiveUrl();
+                    }, 2000);
                 }
             };
 
-            // Step 1-2. 더미 URL을 iFrame의 src에 할당하여 로드를 시작합니다.
+            // Step 1. 더미 URL을 iFrame의 src에 할당하여 로드를 시작합니다.
             console.log("Step 1. 더미 URL 로드 시작: " + dummy_url);
             iframe.src = dummy_url;
             

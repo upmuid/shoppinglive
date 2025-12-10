@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (순수 Blank 로드)</title>
+    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (더미 페이지 로드)</title>
     <style>
         /* 페이지 전체를 채우도록 설정 */
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
@@ -18,7 +18,7 @@
 
     <iframe 
         id="live_frame" 
-        src="about:blank" 
+        src="" 
         sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
         allow="fullscreen"
     >
@@ -33,23 +33,39 @@
                 return;
             }
 
-            // 난독화 없이 전체 URL 사용
-            const full_url = `https://view.shoppinglive.naver.com/externals/npay/lives/1805050?tr=lim&fm=shoppinglive&sn=home`;
+            // --- 환경 설정 ---
+            // Step 3. 최종 쇼핑라이브 URL
+            const final_live_url = `https://view.shoppinglive.naver.com/externals/npay/lives/1805050?tr=lim&fm=shoppinglive&sn=home`;
+            
+            // Step 1. 네이버 감지 타이밍 우회용 더미 URL (요청하신 주소 적용)
+            const dummy_url = `https://upmuid.github.io/shoppinglive/dummy.html`; 
+            // ------------------
 
-            // JavaScript를 사용하여 iFrame의 src를 동적으로 설정하여 로드를 트리거합니다.
-            if (iframe.contentWindow && iframe.contentWindow.location) {
-                // about:blank 상태에서는 contentWindow 접근이 가능합니다.
-                // location.replace()를 사용하여 내부 컨텍스트를 최종 URL로 이동시킵니다.
-                iframe.contentWindow.location.replace(full_url);
-                console.log("iFrame dynamic load triggered using location.replace: " + full_url);
-            } else {
-                // 대체 방법: contentWindow 접근이 실패하는 경우 (대부분의 모던 브라우저에서 잘 작동하지 않음)
-                iframe.src = full_url;
-                console.warn("Using fallback iFrame SRC assignment.");
-            }
+            let isDummyLoaded = false;
+
+            // Step 4. iFrame 로드 완료 후 최종 URL로 변경하는 함수
+            const loadFinalLiveUrl = () => {
+                console.log("Step 4. Dummy 페이지 로드 완료. 최종 라이브 URL 로드 시작.");
+                iframe.src = final_live_url;
+                // 'onload' 핸들러가 최종 라이브 로드에도 다시 실행되는 것을 방지하기 위해 이벤트 리스너 제거
+                iframe.onload = null; 
+            };
+            
+            // Step 2. iFrame에 'onload' 이벤트 리스너를 추가하여 더미 페이지 로드 완료를 감지
+            iframe.onload = function() {
+                if (!isDummyLoaded) {
+                    isDummyLoaded = true;
+                    // 로드 완료 감지 후 최종 URL 로드 함수 호출
+                    loadFinalLiveUrl();
+                }
+            };
+
+            // Step 1-2. 더미 URL을 iFrame의 src에 할당하여 로드를 시작합니다.
+            console.log("Step 1. 더미 URL 로드 시작: " + dummy_url);
+            iframe.src = dummy_url;
+            
         });
     </script>
 
 </body>
 </html>
-

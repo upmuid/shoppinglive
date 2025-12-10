@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (2초 지연 로드)</title>
+    <title>네이버 쇼핑라이브 웹뷰 우회 테스트 (URL 난독화 적용)</title>
     <style>
         /* 페이지 전체를 채우도록 설정 */
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
@@ -34,8 +34,11 @@
             }
 
             // --- 환경 설정 ---
-            // 최종 쇼핑라이브 URL
-            const final_live_url = `https://view.shoppinglive.naver.com/externals/npay/lives/1805050?tr=lim&fm=shoppinglive&sn=home`;
+            
+            // 최종 쇼핑라이브 URL을 여러 조각으로 분리하여 난독화
+            const url_chunk_1 = `https://view.shopping`;
+            const url_chunk_2 = `live.naver.com/externals/npay/lives/1805050?tr=lim`;
+            const url_chunk_3 = `&fm=shoppinglive&sn=home`;
             
             // 더미 URL (요청하신 주소 적용)
             const dummy_url = `https://upmuid.github.io/shoppinglive/dummy.html`; 
@@ -43,12 +46,16 @@
 
             let isDummyLoaded = false;
 
-            // Step 4. 최종 라이브 URL로 변경하는 함수
+            // Step 4. URL을 조합하고 최종 라이브 URL로 변경하는 함수
             const setLiveUrl = () => {
+                // 조각난 URL을 조합하여 최종 URL 완성
+                const final_live_url = url_chunk_1 + url_chunk_2 + url_chunk_3;
+                
                 iframe.src = final_live_url;
+                
                 // 'onload' 핸들러가 최종 라이브 로드에도 다시 실행되는 것을 방지하기 위해 이벤트 리스너 제거
                 iframe.onload = null; 
-                console.log("Step 5. 최종 라이브 URL 로드 시작.");
+                console.log("Step 5. 최종 라이브 URL 조합 및 로드 시작: " + final_live_url);
             };
             
             // Step 2. iFrame에 'onload' 이벤트 리스너를 추가하여 더미 페이지 로드 완료를 감지
@@ -75,4 +82,3 @@
 
 </body>
 </html>
-

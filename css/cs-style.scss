@@ -74,8 +74,15 @@ textarea::placeholder {
     width: 100%;
     @include dis-flex(column, .6rem);
     label {
+        @include dis-flex(row, 0em);
         font-size: 1rem;
         font-weight: 600;
+        align-items: center;
+        span {
+            margin-left: .4rem;
+            font-size: .65rem;
+            color: $-red;
+        }
     }
     input {
         font-size: 1rem;
@@ -272,7 +279,7 @@ textarea::placeholder {
         font-weight: 400;
         pointer-events: none;
         transition: 0.2s ease;
-        z-index: 99;
+        z-index: 1;
     }
     //값이 있으면 라벨 삭제
     &.is-filled {

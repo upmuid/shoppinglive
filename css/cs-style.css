@@ -1471,8 +1471,17 @@ textarea::placeholder {
   gap: 0.6rem;
 }
 .input-full label {
+  display: flex;
+  flex-direction: row;
+  gap: 0em;
   font-size: 1rem;
   font-weight: 600;
+  align-items: center;
+}
+.input-full label span {
+  margin-left: 0.4rem;
+  font-size: 0.65rem;
+  color: #F73631;
 }
 .input-full input {
   font-size: 1rem;
@@ -1658,7 +1667,7 @@ textarea::placeholder {
   font-weight: 400;
   pointer-events: none;
   transition: 0.2s ease;
-  z-index: 99;
+  z-index: 1;
 }
 .date_picker.is-filled .time-label {
   display: none;

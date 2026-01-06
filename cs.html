@@ -51,9 +51,9 @@
 
                 <div class="box right">
                     <div class="cs-input-area">
-                        <div class="input-full">
+                        <div class="input-full required">
                             <label for="company">
-                                <p>광고주명</p>
+                                <p>광고주명<span>필수입력</span></p>
                             </label>
                             <!--광고주명 수집 id="company"-->
                             <input type="text" class="txt-input" id="company" placeholder="주식회사 네이버">
@@ -67,12 +67,28 @@
                             <input type="text" class="txt-input" id="agency" placeholder="쇼핑라이브 부스터 센터">
                         </div>
 
-                        <div class="input-full">
+                        <div class="input-full required">
                             <label for="name">
-                                <p>담당자 이름</p>
+                                <p>담당자 이름<span>필수입력</span></p>
                             </label>
                             <!--담당자 이름 수집 id="name"-->
                             <input type="text" class="txt-input" id="name" placeholder="홍길동">
+                        </div>
+
+                        <div class="input-full required">
+                            <label for="name">
+                                <p>담당자 이메일<span>필수입력</span></p>
+                            </label>
+                            <!--담당자 이름 수집 id="name"-->
+                            <input type="text" class="txt-input" id="email" placeholder="example@naver.com">
+                        </div>
+
+                        <div class="input-full required">
+                            <label for="name">
+                                <p>담당자 휴대폰 번호<span>필수입력</span></p>
+                            </label>
+                            <!--담당자 이름 수집 id="name"-->
+                            <input type="text" class="txt-input" id="phone" placeholder="01012341234(숫자만)" oninput="checkPhoneNumber(this)">
                         </div>
 
                         <div class="input-full">
@@ -113,7 +129,7 @@
                                 </div>
                                 <div class="select_box">
                                     <select id="ilveTime" class="timeinput" required>
-                                        <option value="" hidden selected disabled>시간 선택</option>
+                                        <option value="" hidden selected disabled>방송 시간</option>
                                         <option value="00:30" >30분</option>
                                         <option value="01:00" >1시간</option>
                                         <option value="01:30" >1시간 30분</option>
@@ -132,7 +148,7 @@
                                 <p>문의사항</p>
                             </label>
                             <!--문의사항 입력란 id="cs-note"-->
-                            <textarea class="txt-input" id="cs-note" placeholder="문의 내용을 입력해주세요. 상세히 입력해 주시면 해결 속도가 빨라질 수 있습니다."></textarea>
+                            <textarea class="txt-input" id="cs-note" placeholder="문의 내용을 입력해주세요."></textarea>
                         </div>
 
                         <div class="input-full">
@@ -144,7 +160,7 @@
                                 </label>
                             </div>
                             <div class="txt-box">
-                                1. 수집하는 개인정보 항목: 광고주/ 회사명, 이름, 이메일주소<br>
+                                1. 수집하는 개인정보 항목: 광고주/ 회사명, 이름, 이메일주소, 휴대폰 번호<br>
                                 2. 수집 및 이용목적: 제휴 및 문의사항에 대한 답변<br>
                                 3. 보유 및 이용기간: 목적 달성시 까지<br><br>
 
@@ -267,56 +283,117 @@
             });
         });
     });
-        
 
-    // 모든요소에 값이 존재해야 버튼의 disabled 속성이 해제되는 코드
-    $(function () {
-        const $inputs = $(".cs-input-area input:not([type='checkbox'])");
-        const $textarea = $(".cs-input-area textarea");
-        const $checkbox = $("#check");
-        const $submitBtn = $(".sumit-btn");
-
-        function validateForm() {
-            let isValid = true;
-
-            // input 체크
-            $inputs.each(function () {
-                if (!$(this).val().trim()) {
-                    isValid = false;
-                    return false;
-                }
-            });
-
-            // textarea 체크
-            if (!$textarea.val().trim()) {
-                isValid = false;
-            }
-
-            // checkbox 체크
-            if (!$checkbox.is(":checked")) {
-                isValid = false;
-            }
-
-            // 버튼 상태 제어
-            if (isValid) {
-                $submitBtn
-                    .removeClass("disabled")
-                    .prop("disabled", false);
-            } else {
-                $submitBtn
-                    .addClass("disabled")
-                    .prop("disabled", true);
-            }
+    //휴대폰번호 유효성 검사
+    //전화번호 입력 및 하이픈 자동 처리
+    function checkPhoneNumber(input) {
+        // 숫자만 추출 (최대 20자)
+        let value = input.value.replace(/[^0-9]/g, '');
+        if (value.length > 20) {
+            value = value.substring(0, 20);
         }
 
-        // 이벤트 바인딩
-        $inputs.on("input change", validateForm);
-        $textarea.on("input", validateForm);
+        let formattedValue = "";
+        
+        // 최소 9자 - 20자까지 하이픈 적용
+        if (value.length <= 3) {
+            formattedValue = value;
+        } else if (value.length <= 6) {
+            formattedValue = value.replace(/(\d{3})(\d+)/, '$1-$2');
+        } else if (value.length <= 10) {
+            formattedValue = value.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+        } else if (value.length <= 11) {
+            // 11자리 (휴대폰 표준)
+            formattedValue = value.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+        } else {
+            // 12자 이상(국제전화 등 고려)
+            formattedValue = value.replace(/(\d{3})(\d{4})(\d{4})(\d+)/, '$1-$2-$3-$4');
+        }
+
+        input.value = formattedValue;
+
+        // 혹은 특정 길이(예: 9자) 미만일 때 붉은색으로 표시하도록 설정 가능
+        if (value.length > 0 && value.length < 9) {
+            input.style.color = "red"; // 색상 제어 가능 (현재 붉은색)
+            $(input).data('valid', false);
+        } else if (value.length >= 9) {
+            input.style.color = ""; // 정상 (CSS 기본값)
+            $(input).data('valid', true);
+        } else {
+            $(input).data('valid', false);
+        }
+
+        validateForm();
+    }
+
+    //전체 폼 유효성 검사 (버튼 활성화)
+    function validateForm() {
+        const $submitBtn = $(".sumit-btn");
+        const $requiredInputs = $(".required input:not([type='checkbox'])");
+        const $checkbox = $("#check");
+        const $phoneInput = $("#phone");
+        
+        let allFilled = true;
+
+        //필수 텍스트 입력란 확인 (.required 클래스가 부여된 div 자녀 input에 적용됨)
+        $requiredInputs.each(function () {
+            if (!$(this).val().trim()) {
+                allFilled = false;
+                return false;
+            }
+        });
+
+        //전화번호 유효성 확인 (최소 9자 이상 입력 여부)
+        const isPhoneValid = $phoneInput.data('valid') === true;
+
+        //약관 동의 확인 (체크박스 동의 여부)
+        const isAgreed = $checkbox.is(":checked");
+
+        // 모든 조건 충족 시 버튼 활성화 및 .disabled 클래스 제거
+        if (allFilled && isPhoneValid && isAgreed) {
+            $submitBtn.removeClass("disabled").prop("disabled", false);
+        } else {
+            $submitBtn.addClass("disabled").prop("disabled", true);
+        }
+    }
+
+    //이벤트 초기화
+    $(function () {
+        const $requiredInputs = $(".required input:not([type='checkbox'])");
+        const $checkbox = $("#check");
+        const $textarea = $("#cs-note");
+
+        $requiredInputs.on("input change", validateForm);
+        if($textarea.length) $textarea.on("input", validateForm);
         $checkbox.on("change", validateForm);
 
-        // 최초 로딩 시 상태 체크
         validateForm();
     });
+
+    //문의하기 버튼 클릭 시 데이터 수집 로직 //
+    //$('.sumit-btn').on('click', function () {
+        // 휴대폰 번호에서 하이픈 제거한 숫자만 추출 //
+       //const rawPhoneNumber = $('#phone').val().replace(/[^0-9]/g, '');
+        
+        // 수집할 데이터 객체 예시 //
+        //const formData = {
+            //company: $('#company').val(),
+            //agency: $('#agency').val(),
+            //name: $('#name').val(),
+            //email: $('#email').val(),
+            //phone: rawPhoneNumber, // 하이픈 제외된 숫자만 담김
+            //channelId: $('#channelId').val(),
+            //liveId: $('#liveId').val(),
+            //startDate: $('#startDate').val(),
+            //startTime: $('#starTime').val(),
+            //liveTime: $('#ilveTime').val(),
+            //note: $('#cs-note').val()
+        //};
+
+        //console.log("전송될 데이터:", formData);   
+
+        // 전송이 성공하면 .success팝업 띄워주십셔 실패하면 .Error 띄워주시구요 //
+    //});
 </script>
 
 </body>

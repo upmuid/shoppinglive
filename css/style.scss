@@ -289,7 +289,7 @@ nav ul{
         justify-content: flex-end;
         text-align: right;
         img {
-            height: 1.2rem;
+            height: 1.5rem;
         }
     }
     .back-btn {
@@ -330,6 +330,7 @@ nav ul{
 //----본문------
 .contant {
     padding: 1rem 0rem 0rem;
+    margin-top: 56px;
     @include dis-flex(column, 0rem);
     position: relative;
 }
@@ -341,7 +342,7 @@ nav ul{
 }
 
 .index {
-    background-color: $-naverbg;
+    background-color: $bg;
 }
 
 .itembox.index {
@@ -362,12 +363,19 @@ nav ul{
         @include dis-flex(column, .4rem);
         flex: 1;
         p:nth-child(1) {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
         }
         p:nth-child(2) {
-            font-size: 1rem;
-            font-weight: 400;
+            @include dis-flex(row, .4rem);
+            font-size: 1.4rem;
+            line-height: 1.4rem;
+            font-weight: 700;
+            align-items: center;
+            img {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
         }
     }
     .img {
@@ -461,7 +469,7 @@ nav ul{
             @include dis-flex(row, .4rem);
             width: 100%;
             justify-content: center;
-            background-color: $-naverbg;
+            background-color: $bg;
             padding: 1.25rem 0;
             border-top: 1px solid #FFDBDD;
             p {
@@ -472,10 +480,39 @@ nav ul{
     } 
 }
 
+.list-item {
+    position: relative;
+    .npay-ani {
+        position: absolute;
+        width: 3.5rem;
+        top: -2.2rem;
+        left: -.4rem;
+        z-index: 5;
+    }
+}
+
+.npay-ani {
+    img {
+        width: 6.5rem;
+    }
+}
+
+
+.comming-list-item {
+    position: relative;
+    .npay-ani {
+        position: absolute;
+        width: 3.5rem;
+        top: -2.2rem;
+        left: -0.8rem;
+        z-index: 5;
+    }
+}
+
 .list-item-none {
-    @include dis-flex(column, 1rem);
+    @include dis-flex(row, 1rem);
     align-items: center;
-    padding: 2rem;
+    padding: 0rem;
     width: 100%;
     .icon {
         width: 4rem;
@@ -483,27 +520,32 @@ nav ul{
             width: 100%;
         }
     }
-    .txt {
-        @include dis-flex(column, .6rem);
-        text-align: center;
-        font-size: 1rem;
-        .tit {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-    }
-    .btn {
-        padding-top: .4rem;
-        button {
-            padding: .6rem 1rem;
-            border-radius: .4rem;
-            background-color: $w-22;
-            img {
-                height: 1.2rem;
+    .text {
+        @include dis-flex(column, 1rem);
+        .txt {
+            @include dis-flex(column, .6rem);
+            justify-content: flex-start;
+            font-size: 1rem;
+            .tit {
+                font-size: 1.2rem;
+                font-weight: 500;
             }
         }
+        .btn {
+            padding-top: .4rem;
+            button {
+                padding: .6rem 1rem;
+                border-radius: .4rem;
+                background-color: $w-22;
+                img {
+                    height: 1.2rem;
+                }
+            }
+        }
+
     }
 }
+
 .comming-list.type2{
     padding-bottom: 1rem;
 }
@@ -553,6 +595,22 @@ nav ul{
                 overflow: hidden;
                 border: 1px solid $w-3;
                 background-image: url(../imgs/item00.png);
+                .live-list-badge {
+                    @include dis-flex(row, .3rem);
+                    align-items: center;
+                    padding: .9rem .6rem 1.4rem;
+                    height: 1.4rem;
+                    width: auto;
+                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 100%);
+                    img {
+                        height: 1.4rem;
+                    }
+                    p {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: $s-c1;
+                    }
+                }
             }
             .comming-list-title {
                 @include dis-flex(column, .4rem);
@@ -1146,6 +1204,7 @@ nav ul{
         background-color: $bg;
         margin: 0 auto;
         align-items: center;
+        width: 1280px;
     }
     .index .wrap {
         background-color: $bg;
@@ -1188,6 +1247,7 @@ nav ul{
 
     .contant {
         padding: 1rem 0 0;
+        margin-top: 0;
         align-items: center;
     }
 
@@ -1344,6 +1404,7 @@ nav ul{
 
     //----푸터 안내문구------
     .footer {
+        width: calc(100% - 6rem);
         padding: 3rem 3rem;
     }
 
